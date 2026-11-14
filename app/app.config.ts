@@ -3,6 +3,7 @@ import type { ExpoConfig } from 'expo/config';
 const config: ExpoConfig = {
   name: 'SafePair',
   slug: 'safepair',
+  owner: 'thepurplei_ai',
   scheme: 'safepair',
   version: '1.0.0',
   orientation: 'portrait',
@@ -10,13 +11,15 @@ const config: ExpoConfig = {
   userInterfaceStyle: 'automatic',
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'com.safepair.app',
+    bundleIdentifier: 'com.thepurpleiai.safepair',
     infoPlist: {
+      // Only standard HTTPS/TLS is used, which is exempt from export compliance.
+      ITSAppUsesNonExemptEncryption: false,
       UIBackgroundModes: ['location', 'fetch', 'remote-notification'],
     },
   },
   android: {
-    package: 'com.safepair.app',
+    package: 'com.thepurpleiai.safepair',
     adaptiveIcon: {
       backgroundColor: '#E6F4FE',
       foregroundImage: './assets/android-icon-foreground.png',
@@ -68,7 +71,7 @@ const config: ExpoConfig = {
     // Default server; can be overridden in the app's welcome/settings screen.
     serverUrl: process.env.EXPO_PUBLIC_SERVER_URL ?? 'http://localhost:4000',
     eas: {
-      projectId: process.env.EAS_PROJECT_ID,
+      projectId: '7c0d01e3-1891-4151-b3db-96cccb1c59a5',
     },
   },
 };
