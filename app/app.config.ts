@@ -68,6 +68,8 @@ const config: ExpoConfig = {
     ],
   ],
   extra: {
+    // Google Maps on Android crashes without a key, so the app checks this first.
+    hasAndroidMapsKey: !!process.env.GOOGLE_MAPS_ANDROID_API_KEY,
     // Default server; can be overridden in the app's welcome/settings screen.
     serverUrl: process.env.EXPO_PUBLIC_SERVER_URL ?? 'http://localhost:4000',
     eas: {

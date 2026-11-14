@@ -33,7 +33,8 @@ export async function toLocation(obj: ExpoLocation.LocationObject): Promise<Loca
  * the newest fix over HTTP (sockets don't survive in the background).
  * Must be defined at module scope, so this file is imported from the root layout.
  */
-TaskManager.defineTask<{ locations: ExpoLocation.LocationObject[] }>(
+try {
+  TaskManager.defineTask<{ locations: ExpoLocation.LocationObject[] }>(
   BACKGROUND_LOCATION_TASK,
   async ({ data, error }) => {
     if (error || !data?.locations?.length) return;
@@ -47,6 +48,9 @@ TaskManager.defineTask<{ locations: ExpoLocation.LocationObject[] }>(
     }
   },
 );
+} catch (e) {
+  console.warn('[location] could not register background task:', e);
+}
 
 export async function requestForegroundPermission(): Promise<boolean> {
   const { status } = await ExpoLocation.requestForegroundPermissionsAsync();

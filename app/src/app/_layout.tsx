@@ -1,3 +1,5 @@
+// Must be first: reports startup errors on screen in release builds.
+import '@/lib/crashReporter';
 // Must be imported at module scope so the background location task is
 // registered before the OS wakes the app for a location update.
 import '@/lib/location';
@@ -7,6 +9,8 @@ import * as Notifications from 'expo-notifications';
 import { router, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { ScrollView, Text } from 'react-native';
+import { Button } from '@/components/ui';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { IncomingSosOverlay } from '@/components/IncomingSosOverlay';
 import { SessionProvider } from '@/lib/session';
@@ -23,6 +27,22 @@ function useNotificationNavigation() {
     );
     return () => sub.remove();
   }, []);
+}
+
+/** Shown by Expo Router instead of crashing when a screen throws while rendering. */
+export function ErrorBoundary({ error, retry }: { error: Error; retry: () => Promise<void> }) {
+  return (
+    <ScrollView contentContainerStyle={{ padding: 24, paddingTop: 80, gap: 12 }}>
+      <Text style={{ fontSize: 22, fontWeight: '700' }}>Something went wrong</Text>
+      <Text selectable style={{ fontFamily: 'monospace' }}>
+        {error.name}: {error.message}
+      </Text>
+      <Text selectable style={{ fontSize: 11, color: '#687076' }}>
+        {(error.stack ?? '').split('\n').slice(0, 8).join('\n')}
+      </Text>
+      <Button title="Try again" onPress={retry} />
+    </ScrollView>
+  );
 }
 
 export default function RootLayout() {
