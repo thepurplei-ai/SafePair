@@ -1,0 +1,19 @@
+# Render Blueprint for the SafePair server.
+# In Render: New > Blueprint > pick this repository. See README "Hosting on Render".
+services:
+  - type: web
+    name: safepair
+    runtime: node
+    plan: free
+    branch: claude/beautiful-ramanujan-a1erq5
+    rootDir: server
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # The free plan has no persistent disk: this file is wiped whenever the
+      # service restarts or redeploys, and both people need to pair again.
+      - key: DATA_FILE
+        value: /tmp/safepair-data.json

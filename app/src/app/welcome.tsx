@@ -1,3 +1,4 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -34,7 +35,7 @@ export default function Welcome() {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
           <View style={[styles.logo, { backgroundColor: t.dangerSoft }]}>
-            <Text style={{ fontSize: 44 }}>🫶</Text>
+            <Ionicons name="shield-checkmark" size={46} color={t.danger} />
           </View>
           <Text style={[styles.title, { color: t.text }]}>SafePair</Text>
           <Text style={[styles.subtitle, { color: t.muted }]}>

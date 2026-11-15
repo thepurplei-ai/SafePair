@@ -45,6 +45,17 @@ npm test             # integration tests (pairing, location, SOS, chat, presence
 Environment variables: `PORT` (default `4000`), `DATA_FILE` (JSON persistence file, default `safepair-data.json`), `CORS_ORIGIN`.
 There is a `Dockerfile` for deployment. Put the server behind HTTPS in production.
 
+#### Hosting on Render (free)
+
+`render.yaml` at the repo root describes the service.
+
+1. Sign in at render.com with GitHub and give Render access to this repository.
+2. **New → Blueprint**, pick this repository, and click **Apply**. Render builds and starts the `safepair` web service.
+3. Copy the service URL (for example `https://safepair-xxxx.onrender.com`). Opening `<url>/health` should show `{"ok":true}`.
+4. In the app, open **Server settings** on the welcome screen and enter that URL on both phones.
+
+Free-plan limits: the service sleeps after about 15 minutes without traffic, so the first request afterwards can take up to a minute. It has no persistent disk, so a restart or redeploy wipes accounts and pairings. The app then returns to the welcome screen and the two people pair again. For real use, switch to a paid plan and add a disk (set `DATA_FILE` to a path on it).
+
 ### 2. App
 
 ```bash
