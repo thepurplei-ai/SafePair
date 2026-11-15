@@ -42,6 +42,21 @@ const config: ExpoConfig = {
   plugins: [
     'expo-router',
     [
+      'expo-build-properties',
+      {
+        android: {
+          // R8 strips Room's generated database classes, which WorkManager
+          // (used by expo-notifications / expo-task-manager) loads by name at
+          // startup. Without these rules the release app crashes on launch.
+          extraProguardRules: [
+            '-keep class * extends androidx.room.RoomDatabase { <init>(); }',
+            '-keep class androidx.work.impl.WorkDatabase_Impl { *; }',
+            '-keep class androidx.work.impl.** { *; }',
+          ].join('\n'),
+        },
+      },
+    ],
+    [
       'expo-location',
       {
         locationAlwaysAndWhenInUsePermission:
